@@ -1,7 +1,7 @@
 import styles from './Application.module.scss'
 import {useEffect, useRef} from 'react';
 import {
-	BoxGeometry,
+	BoxGeometry, Color,
 	Mesh,
 	MeshBasicMaterial,
 	PerspectiveCamera,
@@ -11,10 +11,11 @@ import {
 import {OrbitControls} from 'three/examples/jsm/controls/OrbitControls';
 
 const scene = new Scene
+scene.background = new Color('silver')
 const camera = new PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000)
 
 const geometry = new BoxGeometry
-const material = new MeshBasicMaterial({color: 'lightgreen', wireframe: true})
+const material = new MeshBasicMaterial({color: 'green', wireframe: false})
 const cube = new Mesh(geometry, material)
 scene.add(cube)
 
