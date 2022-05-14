@@ -1,9 +1,9 @@
 import styles from './Application.module.scss'
 import {useEffect, useRef} from 'react';
 import {
-	BoxGeometry, Color,
+	BoxGeometry, Color, DirectionalLight, DirectionalLightHelper,
 	Mesh,
-	MeshBasicMaterial,
+	MeshPhongMaterial,
 	PerspectiveCamera,
 	Scene,
 	WebGLRenderer
@@ -15,9 +15,21 @@ scene.background = new Color('silver')
 const camera = new PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000)
 
 const geometry = new BoxGeometry
-const material = new MeshBasicMaterial({color: 'green', wireframe: false})
+const material = new MeshPhongMaterial({
+	color: 0xdaa520,
+	emissive: 0x000000,
+	specular: 0xbcbcbc,
+})
 const cube = new Mesh(geometry, material)
 scene.add(cube)
+
+const light = new DirectionalLight('white', 1)
+light.position.set(10, 10, 0)
+light.target.position.set(0, 0, 0)
+scene.add(light)
+scene.add(light.target)
+
+scene.add(new DirectionalLightHelper(light))
 
 export default function Application() {
 	const ref = useRef<HTMLDivElement>(null)
