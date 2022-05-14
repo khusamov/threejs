@@ -1,6 +1,13 @@
 import styles from './Application.module.scss'
 import {useEffect, useRef} from 'react';
-import {BoxGeometry, Mesh, MeshBasicMaterial, PerspectiveCamera, Scene, WebGLRenderer} from 'three';
+import {
+	BoxGeometry,
+	Mesh,
+	MeshBasicMaterial,
+	PerspectiveCamera,
+	Scene,
+	WebGLRenderer
+} from 'three';
 import {OrbitControls} from 'three/examples/jsm/controls/OrbitControls';
 
 const scene = new Scene
@@ -12,31 +19,35 @@ const cube = new Mesh(geometry, material)
 scene.add(cube)
 
 export default function Application() {
-	const ref = useRef<HTMLDivElement>()
+	const ref = useRef<HTMLDivElement>(null)
 
 	const frame = useRef(0)
 	useEffect(() => {
 		const renderer = new WebGLRenderer
 		renderer.setSize(window.innerWidth, window.innerHeight)
 		const canvasElement = renderer.domElement
-		ref.current.appendChild(canvasElement)
+		if (ref.current) {
+			ref.current.appendChild(canvasElement)
 
-		camera.position.z = 5
+			camera.position.z = 5
 
-		const orbitControls = new OrbitControls(camera, renderer.domElement)
+			const orbitControls = new OrbitControls(camera, renderer.domElement)
 
-		function animate() {
-			orbitControls.update()
-			renderer.render(scene, camera)
-			frame.current = requestAnimationFrame(animate)
+			function animate() {
+				orbitControls.update() // Не понятно зачем это нужно и без него все работает.
+				renderer.render(scene, camera)
+				frame.current = requestAnimationFrame(animate)
+			}
+
+			animate()
 		}
-
-		animate()
 
 		return () => {
 			cancelAnimationFrame(frame.current)
 			renderer.dispose()
-			ref.current.removeChild(canvasElement)
+			if (ref.current) {
+				ref.current.removeChild(canvasElement)
+			}
 		}
 	}, [])
 
