@@ -1394,6 +1394,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/three@npm:^0.140.0":
+  version: 0.140.0
+  resolution: "@types/three@npm:0.140.0"
+  checksum: 05693787002f0e879e76a09cfd474d4fd100779f00c048e380d146783adaff539846988625b0f9117451bf2790637a236c68111f7f3e160f5227373a037381ba
+  languageName: node
+  linkType: hard
+
 "abbrev@npm:1":
   version: 1.1.1
   resolution: "abbrev@npm:1.1.1"
@@ -4036,10 +4043,12 @@ __metadata:
     "@parcel/transformer-typescript-types": 2.5.0
     "@types/react": ^18.0.9
     "@types/react-dom": ^18.0.3
+    "@types/three": ^0.140.0
     node-sass: ^7.0.1
     parcel: ^2.5.0
     react: ^18.1.0
     react-dom: ^18.1.0
+    three: ^0.140.2
   languageName: unknown
   linkType: soft
 
@@ -4433,6 +4442,13 @@ __metadata:
   bin:
     terser: bin/terser
   checksum: 0b1f5043cf5c3973005fe2ae4ff3be82511c336a6430599dacd4e2acf77c974d4474b0f1eec4823977c1f33823147e736ff712ca8e098bee3db25946480fa29d
+  languageName: node
+  linkType: hard
+
+"three@npm:^0.140.2":
+  version: 0.140.2
+  resolution: "three@npm:0.140.2"
+  checksum: 67b2733c4177ba0555a16a99e833340586d7a5b1dc4ac2ce7a376c55542cbc6acf72d785ce55b887597551bcf6e209213bcacb0b2c990db66f56ba4991601acb
   languageName: node
   linkType: hard
 
