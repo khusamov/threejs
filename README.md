@@ -6,6 +6,10 @@
 У Three.js редактор есть, но его возможности почти нулевые.
 https://threejs.org/editor/
 
+Есть еще один вариант это Blend4Web https://www.blend4web.com/ru/
+У него преимущество в использовании редактора Blender.
+Вот старые обзоры этого движка https://habr.com/ru/users/Prand/posts/
+
 
 Статья сравнение Three.js vs Babylon.js
 https://habr.com/ru/post/246259/
