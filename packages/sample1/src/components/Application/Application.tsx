@@ -9,6 +9,9 @@ import {
 	WebGLRenderer
 } from 'three';
 import {OrbitControls} from 'three/examples/jsm/controls/OrbitControls';
+import {useFileLoaderEffect} from "./useFileLoaderEffect";
+import {GLTFLoader} from 'three/examples/jsm/loaders/GLTFLoader';
+import {parseGltf} from "./parseGltf";
 
 const scene = new Scene
 scene.background = new Color('silver')
@@ -32,6 +35,13 @@ scene.add(light.target)
 scene.add(new DirectionalLightHelper(light))
 
 export default function Application() {
+	useFileLoaderEffect(
+		async file => {
+			const gltf = await parseGltf(new GLTFLoader(), await file.arrayBuffer())
+			scene.add(gltf.scene)
+		}
+	)
+
 	const ref = useRef<HTMLDivElement>(null)
 
 	const frame = useRef(0)
