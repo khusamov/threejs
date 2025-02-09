@@ -3098,6 +3098,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"process@npm:^0.11.10":
+  version: 0.11.10
+  resolution: "process@npm:0.11.10"
+  checksum: bfcce49814f7d172a6e6a14d5fa3ac92cc3d0c3b9feb1279774708a719e19acd673995226351a082a9ae99978254e320ccda4240ddc474ba31a76c79491ca7c3
+  languageName: node
+  linkType: hard
+
 "promise-retry@npm:^2.0.1":
   version: 2.0.1
   resolution: "promise-retry@npm:2.0.1"
@@ -3205,6 +3212,7 @@ __metadata:
     "@types/react-dom": ^19.0.3
     "@types/three": ^0.173.0
     parcel: ^2.13.3
+    process: ^0.11.10
     react: ^19.0.0
     react-dom: ^19.0.0
     sass: ^1.84.0
