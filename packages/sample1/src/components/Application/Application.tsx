@@ -36,8 +36,7 @@ export default function Application() {
 
 	const frame = useRef(0)
 	useEffect(() => {
-		const renderer = new WebGLRenderer
-		renderer.setSize(window.innerWidth, window.innerHeight)
+		const renderer = new WebGLRenderer({antialias: true})
 		const canvasElement = renderer.domElement
 		if (ref.current) {
 			ref.current.appendChild(canvasElement)
@@ -47,6 +46,8 @@ export default function Application() {
 			const orbitControls = new OrbitControls(camera, renderer.domElement)
 
 			function animate() {
+				renderer.setSize(window.innerWidth, window.innerHeight)
+				camera.setViewOffset(window.innerWidth, window.innerHeight, 0, 0, window.innerWidth, window.innerHeight)
 				orbitControls.update() // Не понятно зачем это нужно и без него все работает.
 				renderer.render(scene, camera)
 				frame.current = requestAnimationFrame(animate)
