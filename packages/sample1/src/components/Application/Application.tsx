@@ -65,9 +65,5 @@ export default function Application() {
 		}
 	}, [])
 
-	return (
-		<div ref={ref} className={styles.Application}>
-
-		</div>
-	)
+	return <div ref={ref} className={styles.Application}/>
 }
