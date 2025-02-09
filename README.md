@@ -24,3 +24,9 @@ https://habr.com/ru/post/246259/
 yarn plugin import typescript
 yarn plugin import workspace-tools
 ```
+
+В общем, нужно в файле `.yarnrc.yml` удалить раздел `plugins` и выполнить команды:
+
+```
+yarn plugin import typescript & yarn plugin import workspace-tools
+```
