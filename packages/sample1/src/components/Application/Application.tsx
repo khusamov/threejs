@@ -1,41 +1,17 @@
 import styles from './Application.module.scss'
-import {useEffect, useRef} from 'react';
-import {
-	BoxGeometry, Color, DirectionalLight, DirectionalLightHelper,
-	Mesh,
-	MeshPhongMaterial,
-	PerspectiveCamera,
-	Scene,
-	WebGLRenderer
-} from 'three';
-import {OrbitControls} from 'three/examples/jsm/controls/OrbitControls';
-import {useFileLoaderEffect} from "./useFileLoaderEffect";
-import {GLTFLoader} from 'three/examples/jsm/loaders/GLTFLoader';
-import {parseGltf} from "./parseGltf";
+import {PerspectiveCamera, WebGLRenderer} from 'three';
+import {useApplication} from './useApplication'
+import {createExampleScene} from './createExampleScene'
+import {useFileLoaderEffect} from './useFileLoaderEffect'
+import {parseGltf} from './parseGltf'
+import {GLTFLoader} from 'three/examples/jsm/loaders/GLTFLoader'
+import {useWindowResizer} from './useWindowResizer'
 
 const renderer = new WebGLRenderer({antialias: true})
-const camera = new PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000)
+const camera = new PerspectiveCamera(75, 1, 0.1, 1000)
 camera.position.z = 5
 
-const scene = new Scene
-scene.background = new Color('silver')
-
-const geometry = new BoxGeometry
-const material = new MeshPhongMaterial({
-	color: 0xdaa520,
-	emissive: 0x000000,
-	specular: 0xbcbcbc,
-})
-const cube = new Mesh(geometry, material)
-scene.add(cube)
-
-const light = new DirectionalLight('white', 1)
-light.position.set(10, 10, 0)
-light.target.position.set(0, 0, 0)
-scene.add(light)
-scene.add(light.target)
-
-scene.add(new DirectionalLightHelper(light))
+const scene = createExampleScene()
 
 export default function Application() {
 	useFileLoaderEffect(
@@ -44,36 +20,7 @@ export default function Application() {
 			scene.add(gltf.scene)
 		}
 	)
-
-	const ref = useRef<HTMLDivElement>(null)
-
-	const animationFrame = useRef(0)
-	useEffect(() => {
-		const canvasElement = renderer.domElement
-		const orbitControls = new OrbitControls(camera, renderer.domElement)
-
-		if (ref.current) {
-			ref.current.appendChild(canvasElement)
-
-			function animate() {
-				renderer.setSize(window.innerWidth, window.innerHeight)
-				camera.setViewOffset(window.innerWidth, window.innerHeight, 0, 0, window.innerWidth, window.innerHeight)
-				orbitControls.update() // Не понятно зачем это нужно и без него все работает.
-				renderer.render(scene, camera)
-				animationFrame.current = requestAnimationFrame(animate)
-			}
-
-			animate()
-		}
-
-		return () => {
-			cancelAnimationFrame(animationFrame.current)
-			renderer.dispose()
-			if (ref.current) {
-				ref.current.removeChild(canvasElement)
-			}
-		}
-	}, [])
-
+	useWindowResizer(camera, renderer)
+	const {ref} = useApplication(camera, renderer, scene)
 	return <div ref={ref} className={styles.Application}/>
 }
