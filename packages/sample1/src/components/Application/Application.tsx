@@ -13,9 +13,12 @@ import {useFileLoaderEffect} from "./useFileLoaderEffect";
 import {GLTFLoader} from 'three/examples/jsm/loaders/GLTFLoader';
 import {parseGltf} from "./parseGltf";
 
+const renderer = new WebGLRenderer({antialias: true})
+const camera = new PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000)
+camera.position.z = 5
+
 const scene = new Scene
 scene.background = new Color('silver')
-const camera = new PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000)
 
 const geometry = new BoxGeometry
 const material = new MeshPhongMaterial({
@@ -44,30 +47,27 @@ export default function Application() {
 
 	const ref = useRef<HTMLDivElement>(null)
 
-	const frame = useRef(0)
+	const animationFrame = useRef(0)
 	useEffect(() => {
-		const renderer = new WebGLRenderer({antialias: true})
 		const canvasElement = renderer.domElement
+		const orbitControls = new OrbitControls(camera, renderer.domElement)
+
 		if (ref.current) {
 			ref.current.appendChild(canvasElement)
-
-			camera.position.z = 5
-
-			const orbitControls = new OrbitControls(camera, renderer.domElement)
 
 			function animate() {
 				renderer.setSize(window.innerWidth, window.innerHeight)
 				camera.setViewOffset(window.innerWidth, window.innerHeight, 0, 0, window.innerWidth, window.innerHeight)
 				orbitControls.update() // Не понятно зачем это нужно и без него все работает.
 				renderer.render(scene, camera)
-				frame.current = requestAnimationFrame(animate)
+				animationFrame.current = requestAnimationFrame(animate)
 			}
 
 			animate()
 		}
 
 		return () => {
-			cancelAnimationFrame(frame.current)
+			cancelAnimationFrame(animationFrame.current)
 			renderer.dispose()
 			if (ref.current) {
 				ref.current.removeChild(canvasElement)
